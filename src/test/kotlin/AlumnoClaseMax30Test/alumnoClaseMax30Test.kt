@@ -20,7 +20,7 @@ class alumnoClaseMax30Test {
         clase[0] = AlumnosMax30("53986048A", "Iván", 5.89)
         clase[1] = AlumnosMax30("53364648D", "Manuel", 10.0)
         clase[2] = AlumnosMax30("26486048G", "Belén", 2.45)
-        clase[3] = AlumnosMax30("52928599F", "Cristobal", 0.34)
+        clase[3] = AlumnosMax30("52928599F","Cristobal", 0.34)
         clase[4] = AlumnosMax30("53739520Z", "Mario", 7.6524)
     }
 
