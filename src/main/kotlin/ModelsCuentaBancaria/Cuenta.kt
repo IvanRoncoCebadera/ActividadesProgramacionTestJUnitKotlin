@@ -407,8 +407,8 @@ data class Cuenta(val jefe: String) {
     fun introducirEmail(): String {
         var email = ""
         do{
-            email = readln()
             try{
+                email = readln()
                 emailValido(email)
             }catch(e: Exception){
                 println(e.message)
