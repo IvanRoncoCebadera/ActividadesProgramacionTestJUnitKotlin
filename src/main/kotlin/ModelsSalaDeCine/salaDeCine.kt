@@ -44,7 +44,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
         var butaca = ""
         var contadorEntradas = 0
         do {
-            println("""Introduzca las butacas que quieras comprar, puedes introducir el indentificador de una butaca a comprar ( A1, por ejemplo ) o escribir "stop" para dejar de comprar butacas: """)
+            println("""Introduzca las butacas que quieras comprar, puedes introducir el indentificador de una butaca a comprar ( "A1", por ejemplo ) o escribir "stop" para dejar de comprar butacas: """)
             butaca = introducirButaca()
             if(butacaLibre(butaca)) {
                 if (butaca != "stop") {
@@ -81,7 +81,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
         var butaca = ""
         var contadorEntradas = 0
         do {
-            println("""Introduzca las butacas que quieras reservar, puedes introducir el indentificador de una butaca a reservar ( A1, por ejemplo ) o escribir "stop" para dejar de reservar butacas: """)
+            println("""Introduzca las butacas que quieras reservar, puedes introducir el indentificador de una butaca a reservar ( "A1", por ejemplo ) o escribir "stop" para dejar de reservar butacas: """)
             butaca = introducirButaca()
             if(butacaLibre(butaca)) {
                 if (butaca != "stop") {
@@ -118,7 +118,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
         var butaca = ""
         var contadorEntradas = 0
         do {
-            println("""Introduzca las butacas que quieras formalizar de reservas a compras, puedes introducir el indentificador de una butaca ( A1, por ejemplo ) o escribir "stop" para dejarlo: """)
+            println("""Introduzca las butacas que quieras formalizar de reservas a compras, puedes introducir el indentificador de una butaca ( "A1", por ejemplo ) o escribir "stop" para dejarlo: """)
             butaca = introducirButaca()
             if(butaca != "stop"){
                 val posicionButaca = buscarButacaPorIndentificador(butaca)
@@ -146,7 +146,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
         var butaca = ""
         var contadorEntradas = 0
         do {
-            println("""Introduzca las butacas cuya reserva/compra quieras anular, puedes introducir el indentificador de una butaca ( A1, por ejemplo ) o escribir "stop" para dejar de anular reservas/compras: """)
+            println("""Introduzca las butacas cuya reserva/compra quieras anular, puedes introducir el indentificador de una butaca ( "A1", por ejemplo ) o escribir "stop" para dejar de anular reservas/compras: """)
             butaca = introducirButaca()
             if(butaca != "stop"){
                 val posicionButaca = buscarButacaPorIndentificador(butaca)

@@ -5,7 +5,7 @@ fun main(){
     println("Primero introduce los datos de la sal del cine:")
     println("Introduce el nombre que tiene su cine:")
     val nombre = introducirNombre()
-    println("Introduce el número de fila que tiene su cine:")
+    println("Introduce el número de filas que tiene su cine:")
     val filas = introducirFilaColumna()
     println("Introduce el número de columnas que tiene su cine:")
     val columnas = introducirFilaColumna()
@@ -15,7 +15,7 @@ fun main(){
     val titulo = introducirTitulo()
     println("Introduce el año de publicación de la pelicula:")
     val añoPublicacion =  introducirAñoPublicación()
-    println("Introduce el director de la pelicula:")
+    println("Introduce el nombre del director de la pelicula:")
     val director = introducirDirector()
     println("Introduce el genero de la pelicula:")
     val genero = introducirGenero()
@@ -51,7 +51,7 @@ fun introducirButaca(): String{
     var butaca = ""
     do{
         try{
-            butaca = readln().trim()
+            butaca = readln().trim().lowercase()
             butacaValida(butaca)
         }catch(e: Exception){
             println(e.message)

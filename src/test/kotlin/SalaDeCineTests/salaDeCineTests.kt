@@ -47,8 +47,12 @@ class salaDeCineTests {
 
     @Test
     fun añoPublicacionValidoTest(){
-        val añoPublicacion = 2022
-        assertTrue(añoPublicacionValido(añoPublicacion))
+        val añoPublicacion1 = 2022
+        val añoPublicacion2 = 1950
+        assertAll(
+            { assertTrue(añoPublicacionValido(añoPublicacion1)) },
+            { assertTrue(añoPublicacionValido(añoPublicacion2)) }
+        )
     }
 
     @Test
@@ -119,8 +123,12 @@ class salaDeCineTests {
 
     @Test
     fun filaColumnaValidaTest(){
-        val filaColumna = 8
-        assertTrue(filaColumnaValida(filaColumna))
+        val filaColumna1 = 1
+        val filaColumna2 = 8
+        assertAll(
+            { assertTrue(filaColumnaValida(filaColumna1)) },
+            { assertTrue(filaColumnaValida(filaColumna2)) }
+        )
     }
 
     @Test
