@@ -64,8 +64,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
                 if (butaca != "stop") {
                     val posicionButaca = buscarButacaPorIndentificador(butaca)
                     if (posicionButaca != Pair(-1, -1)) {
-                        println("De acuerdo, has comprado la butaca $butaca")
-                        butacas[posicionButaca.first][posicionButaca.second]!!.estado = "comprado"
+                        println("De acuerdo, has comprado la butaca ${comprar(posicionButaca)!!.identificador}")
                         contadorEntradas++
                     } else {
                         println("No existe ninguna butaca con esa identificación")
@@ -76,6 +75,15 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
             }
         }while(butaca != "stop")
         println("Has comprado un total de $contadorEntradas butacas")
+    }
+
+    /**
+     * función que sirve para poner el estado de una butaca en "comprado"
+     * @return la butaca cuyo estado fue cambiado
+     */
+    fun comprar(posicionButaca: Pair<Int, Int>): butaca? {
+        butacas[posicionButaca.first][posicionButaca.second]!!.estado = "comprado"
+        return butacas[posicionButaca.first][posicionButaca.second]
     }
 
     /**
@@ -93,8 +101,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
                 if (butaca != "stop") {
                     val posicionButaca = buscarButacaPorIndentificador(butaca)
                     if (posicionButaca != Pair(-1, -1)) {
-                        println("De acuerdo, has reservado la butaca $butaca")
-                        butacas[posicionButaca.first][posicionButaca.second]!!.estado = "reservado"
+                        println("De acuerdo, has reservado la butaca ${reservar(posicionButaca)!!.identificador}")
                         contadorEntradas++
                     } else {
                         println("No existe ninguna butaca con esa identificación")
@@ -105,6 +112,15 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
             }
         }while(butaca != "stop")
         println("Has reservado un total de $contadorEntradas butacas")
+    }
+
+    /**
+     * función que sirve para poner el estado de una butaca en "reservado"
+     * @return la butaca cuyo estado fue cambiado
+     */
+    fun reservar(posicionButaca: Pair<Int, Int>): butaca? {
+        butacas[posicionButaca.first][posicionButaca.second]!!.estado = "reservado"
+        return butacas[posicionButaca.first][posicionButaca.second]
     }
 
     /**
@@ -121,8 +137,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
             if(butaca != "stop"){
                 val posicionButaca = buscarButacaPorIndentificador(butaca)
                 if(posicionButaca != Pair(-1, -1) && butacas[posicionButaca.first][posicionButaca.second]!!.estado == "reservado") {
-                    println("De acuerdo, has formalizado la butaca $butaca")
-                    butacas[posicionButaca.first][posicionButaca.second]!!.estado = "comprado"
+                    println("De acuerdo, has formalizado la butaca ${comprar(posicionButaca)!!.identificador}")
                     contadorEntradas++
                 }else{
                     if(butacas[posicionButaca.first][posicionButaca.second]!!.estado == "reservado") {
@@ -151,8 +166,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
                 val posicionButaca = buscarButacaPorIndentificador(butaca)
                 if(posicionButaca != Pair(-1, -1)) {
                     if(butacas[posicionButaca.first][posicionButaca.second]!!.estado == "reservado" || butacas[posicionButaca.first][posicionButaca.second]!!.estado == "comprado"){
-                        println("De acuerdo, has cancelado la reserva/compra de la butaca $butaca")
-                        butacas[posicionButaca.first][posicionButaca.second]!!.estado = "libre"
+                        println("De acuerdo, has cancelado la reserva/compra de la butaca ${anular(posicionButaca)!!.identificador}")
                         contadorEntradas++
                     }
                 }else{
@@ -165,6 +179,15 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
             }
         }while(butaca != "stop")
         println("Has cancelado la reserva/compra de un total de $contadorEntradas butacas")
+    }
+
+    /**
+     * función que sirve para poner el estado de una butaca en "reservado"
+     * @return la butaca cuyo estado fue cambiado
+     */
+    fun anular(posicionButaca: Pair<Int, Int>): butaca? {
+        butacas[posicionButaca.first][posicionButaca.second]!!.estado = "libre"
+        return butacas[posicionButaca.first][posicionButaca.second]
     }
 
     /**
@@ -295,7 +318,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
      * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
      * @return true en caso de que sea válido
      */
-    fun butacaValida(butaca: String): Boolean {
+    fun butacaValida(butaca: String?): Boolean {
         require(butaca != null){("El mensaje no puede ser nulo, vuelve a probar:")}
         require(butaca.isNotEmpty()){"El mensaje no puede estar vacio, vuelve a probar:"}
         val regex = Regex("[A-Z][0-9]+")
@@ -347,7 +370,7 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
      * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
      * @return true en caso de que sea válido
      */
-    fun opcionValida(opcion: Int): Boolean {
+    fun opcionValida(opcion: Int?): Boolean {
         require(opcion != null){"La opción no puede ser nula, vuelve a probar:"}
         require(opcion in 0..6){"No has elegido una de las opciones posibles, vuelve a probar:"}
         return true
@@ -368,66 +391,63 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
             mensaje = ""
         }
     }
+    /**
+     * función que sirve para introducir una fila o columna válida
+     * @return la fila o columna introducida por teclado
+     */
+    fun introducirFilaColumna(): Int{
+        var filaColumna = 0
+        do{
+            try{
+                filaColumna = readln().toInt()
+                filaColumnaValida(filaColumna)
+            }catch(e: Exception){
+                println(e.message)
+                filaColumna = -1
+            }
+        }while(filaColumna == -1)
+        return filaColumna
+    }
 
-    companion object {
-        /**
-         * función que sirve para introducir una fila o columna válida
-         * @return la fila o columna introducida por teclado
-         */
-        fun introducirFilaColumna(): Int{
-            var filaColumna = 0
-            do{
-                try{
-                    filaColumna = readln().toInt()
-                    filaColumnaValida(filaColumna)
-                }catch(e: Exception){
-                    println(e.message)
-                    filaColumna = -1
-                }
-            }while(filaColumna == -1)
-            return filaColumna
-        }
+    /**
+     * función que sirve para validar el año de publicación introducido por teclado
+     * @param filaColumna lo que queremos validar
+     * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
+     * @return true en caso de que sea válido
+     */
+    fun filaColumnaValida(filaColumna: Int?): Boolean {
+        require(filaColumna != null){("La fila/columna no puede ser nulo, vuelve a probar:")}
+        require(filaColumna > 0){"La fila/columna no puede ser menor que 1, vuelve a probar:"}
+        require(filaColumna < 26){"La fila/columna sobrepasar el tamaño 26, vuelve a probar:"}
+        return true
+    }
+    /**
+     * función que sirve para introducir un nombre válido
+     * @return el nombre introducido por teclado
+     */
+    fun introducirNombre(): String{
+        var nombre = ""
+        do{
+            try{
+                nombre = readln().trim()
+                nombreValido(nombre)
+            }catch(e: Exception){
+                println(e.message)
+                nombre = ""
+            }
+        }while(nombre == "")
+        return nombre
+    }
 
-        /**
-         * función que sirve para validar el año de publicación introducido por teclado
-         * @param filaColumna lo que queremos validar
-         * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
-         * @return true en caso de que sea válido
-         */
-        fun filaColumnaValida(filaColumna: Int): Boolean {
-            require(filaColumna != null){("La fila/columna no puede ser nulo, vuelve a probar:")}
-            require(filaColumna > 0){"La fila/columna no puede ser negativo, vuelve a probar:"}
-            require(filaColumna < 26){"La fila/columna sobrepasar el tamaño 26, vuelve a probar:"}
-            return true
-        }
-        /**
-         * función que sirve para introducir un nombre válido
-         * @return el nombre introducido por teclado
-         */
-        fun introducirNombre(): String{
-            var nombre = ""
-            do{
-                try{
-                    nombre = readln().trim()
-                    nombreValido(nombre)
-                }catch(e: Exception){
-                    println(e.message)
-                    nombre = ""
-                }
-            }while(nombre == "")
-            return nombre
-        }
-
-        /**
-         * función que sirve para validar el nombre introducido por teclado
-         * @param nombre lo que queremos validar
-         * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
-         * @return true en caso de que sea válido
-         */
-        fun nombreValido(nombre: String): Boolean {
-            require(nombre != null){("El nombre no puede ser nulo, vuelve a probar:")}
-            require(nombre.isNotEmpty()){"El nombre no puede estar vacio, vuelve a probar:"}
-            return true
-        }
+    /**
+     * función que sirve para validar el nombre introducido por teclado
+     * @param nombre lo que queremos validar
+     * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
+     * @return true en caso de que sea válido
+     */
+    fun nombreValido(nombre: String?): Boolean {
+        require(nombre != null){("El nombre no puede ser nulo, vuelve a probar:")}
+        require(nombre.isNotEmpty()){"El nombre no puede estar vacio, vuelve a probar:"}
+        return true
     }
 }
