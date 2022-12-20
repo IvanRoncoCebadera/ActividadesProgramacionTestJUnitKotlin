@@ -20,7 +20,7 @@ data class butaca(val identificador: String, var estado: String) {
 
     /**
      * función que sirve para crear y devolver una butaca
-     * @param indentificador es la combinación de fila y columna única de la butaca
+     * @param identificador es la combinación de fila y columna única de la butaca
      * @param estado es el estado de la butaca, puede ser libre, reservado, o ocupado
      * @return la butaca creada según los parametros introducidos
      */

@@ -1,8 +1,6 @@
 package SalaDeCineTests
 
-import ModelsSalaDeCine.butaca
-import ModelsSalaDeCine.pelicula
-import ModelsSalaDeCine.salaDeCine
+import ModelsSalaDeCine.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -32,15 +30,15 @@ class salaDeCineTests {
     @Test
     fun tituloValidoTest(){
         val titulo = "Los tres Mosqueteros"
-        assertTrue(salaDeCine.pelicula.tituloValido(titulo))
+        assertTrue(tituloValido(titulo))
     }
 
     @Test
     fun tituloNoValidoTest(){
         val titulo1 = null
-        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.tituloValido(titulo1) }
+        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { tituloValido(titulo1) }
         val titulo2 = ""
-        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.tituloValido(titulo2) }
+        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { tituloValido(titulo2) }
         assertAll(
             {assertEquals("El título no puede ser nulo, vuelve a probar:", mensaje1.message)},
             {assertEquals("El título de la peli no puede estar vacio, vuelve a probar:", mensaje2.message)}
@@ -50,19 +48,19 @@ class salaDeCineTests {
     @Test
     fun añoPublicacionValidoTest(){
         val añoPublicacion = 2022
-        assertTrue(salaDeCine.pelicula.añoPublicacionValido(añoPublicacion))
+        assertTrue(añoPublicacionValido(añoPublicacion))
     }
 
     @Test
     fun añoPublicacionNoValidoTest(){
         val añoPublicacion1 = null
-        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.añoPublicacionValido(añoPublicacion1) }
+        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { añoPublicacionValido(añoPublicacion1) }
         val añoPublicacion2 = -1
-        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.añoPublicacionValido(añoPublicacion2) }
+        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { añoPublicacionValido(añoPublicacion2) }
         val añoPublicacion3 = 1949
-        val mensaje3: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.añoPublicacionValido(añoPublicacion3) }
+        val mensaje3: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { añoPublicacionValido(añoPublicacion3) }
         val añoPublicacion4 = 2023
-        val mensaje4: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.añoPublicacionValido(añoPublicacion4) }
+        val mensaje4: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { añoPublicacionValido(añoPublicacion4) }
         assertAll(
             {assertEquals("El año de publicación no puede ser nulo, vuelve a probar:", mensaje1.message)},
             {assertEquals("El año de publicación no puede ser negativo, vuelve a probar:" , mensaje2.message)},
@@ -74,15 +72,15 @@ class salaDeCineTests {
     @Test
     fun directorValidoTest(){
         val director = "Jorge"
-        assertTrue(salaDeCine.pelicula.directorValido(director))
+        assertTrue(directorValido(director))
     }
 
     @Test
     fun directorNoValidoTest(){
         val director1 = null
-        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.directorValido(director1) }
+        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { directorValido(director1) }
         val director2 = ""
-        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.directorValido(director2) }
+        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { directorValido(director2) }
         assertAll(
             {assertEquals("El director no puede ser nulo, vuelve a probar:", mensaje1.message)},
             {assertEquals("El director de la peli no puede estar vacio, vuelve a probar:", mensaje2.message)}
@@ -92,15 +90,15 @@ class salaDeCineTests {
     @Test
     fun generoValidoTest(){
         val genero = "Ciencia Ficción"
-        assertTrue(salaDeCine.pelicula.generoValido(genero))
+        assertTrue(generoValido(genero))
     }
 
     @Test
     fun generoNoValidoTest(){
         val genero1 = null
-        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.generoValido(genero1) }
+        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { generoValido(genero1) }
         val genero2 = ""
-        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.pelicula.generoValido(genero2) }
+        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { generoValido(genero2) }
         assertAll(
             {assertEquals("El género no puede ser nulo, vuelve a probar:", mensaje1.message)},
             {assertEquals("El género de la peli no puede estar vacio, vuelve a probar:", mensaje2.message)}
@@ -122,17 +120,17 @@ class salaDeCineTests {
     @Test
     fun filaColumnaValidaTest(){
         val filaColumna = 8
-        assertTrue(salaDeCine.filaColumnaValida(filaColumna))
+        assertTrue(filaColumnaValida(filaColumna))
     }
 
     @Test
     fun filaColumnaNoValidaTest(){
         val filaColumna1 = null
-        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.filaColumnaValida(filaColumna1) }
+        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { filaColumnaValida(filaColumna1) }
         val filaColumna2 = 0
-        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.filaColumnaValida(filaColumna2) }
+        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { filaColumnaValida(filaColumna2) }
         val filaColumna3 = 27
-        val mensaje3: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.filaColumnaValida(filaColumna3) }
+        val mensaje3: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { filaColumnaValida(filaColumna3) }
         assertAll(
             {assertEquals("La fila/columna no puede ser nulo, vuelve a probar:", mensaje1.message)},
             {assertEquals("La fila/columna no puede ser menor que 1, vuelve a probar:" , mensaje2.message)},
@@ -143,15 +141,15 @@ class salaDeCineTests {
     @Test
     fun nombreValidoTest(){
         val nombre = "Ciencia Ficción"
-        assertTrue(salaDeCine.nombreValido(nombre))
+        assertTrue(nombreValido(nombre))
     }
 
     @Test
     fun nombreNoValidoTest(){
         val nombre1 = null
-        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.nombreValido(nombre1) }
+        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { nombreValido(nombre1) }
         val nombre2 = ""
-        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.nombreValido(nombre2) }
+        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { nombreValido(nombre2) }
         assertAll(
             {assertEquals("El nombre no puede ser nulo, vuelve a probar:", mensaje1.message)},
             {assertEquals("El nombre no puede estar vacio, vuelve a probar:", mensaje2.message)}
@@ -163,19 +161,19 @@ class salaDeCineTests {
         val butaca1 = "A1"
         val butaca2 = "stop"
         assertAll(
-            {assertTrue(salaDeCine.butacaValida(butaca1))},
-            {assertTrue(salaDeCine.butacaValida(butaca2))}
+            {assertTrue(butacaValida(butaca1))},
+            {assertTrue(butacaValida(butaca2))}
         )
     }
 
     @Test
     fun butacaNoValidaTest(){
         val butaca1 = null
-        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.butacaValida(butaca1) }
+        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { butacaValida(butaca1) }
         val butaca2 = ""
-        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.butacaValida(butaca2) }
+        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { butacaValida(butaca2) }
         val butaca3 = "5B"
-        val mensaje3: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.butacaValida(butaca3) }
+        val mensaje3: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { butacaValida(butaca3) }
         assertAll(
             {assertEquals("El mensaje no puede ser nulo, vuelve a probar:", mensaje1.message)},
             {assertEquals("El mensaje no puede estar vacio, vuelve a probar:", mensaje2.message)},
@@ -186,17 +184,17 @@ class salaDeCineTests {
     @Test
     fun opcionValidaTest(){
         val opcion = 4
-        assertTrue(salaDeCine.opcionValida(opcion))
+        assertTrue(opcionValida(opcion))
     }
 
     @Test
     fun opcionNoValidaTest(){
         val opcion1 = null
-        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.opcionValida(opcion1) }
+        val mensaje1: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { opcionValida(opcion1) }
         val opcion2 = -1
-        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.opcionValida(opcion2) }
+        val mensaje2: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { opcionValida(opcion2) }
         val opcion3 = 7
-        val mensaje3: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { salaDeCine.opcionValida(opcion3) }
+        val mensaje3: IllegalArgumentException = Assertions.assertThrows(IllegalArgumentException::class.java) { opcionValida(opcion3) }
         assertAll(
             {assertEquals("La opción no puede ser nula, vuelve a probar:", mensaje1.message)},
             {assertEquals("No has elegido una de las opciones posibles, vuelve a probar:" , mensaje2.message)},

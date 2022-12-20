@@ -27,26 +27,12 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
      * función que sirve para crear y devolver una sala de cine
      * @param nombre es el nombre de la sala de cine
      * @param fila es el número de filas de butacas en la sala
-     * @param coluna es el número de columnas de butacas en la sala
+     * @param columna es el número de columnas de butacas en la sala
+     * @param pelicula es el objeto pelicula que se representará en la sala del cine
      * @return la sala de cine creada según el parametro introducido
      */
     fun create(nombre: String, fila: Int, columna: Int, pelicula: pelicula): salaDeCine{
         return salaDeCine(nombre, fila, columna, pelicula)
-    }
-
-    /**
-     * función que sirve para presentar un menu al usuario y conseguir la opción que seleccione
-     * @return la opcion seleccionada por el usuario
-     */
-    fun menu(): Int{
-        println("[1] Comprar entrada")
-        println("[2] Reservar entrada")
-        println("[3] Formalizar reserva de entrada")
-        println("[4] Anular reserva o compra de entrada")
-        println("[5] Conseguir informe de la sala")
-        println("[6] Conseguir recaudación total de la caja")
-        println("[0] Salir")
-        return introducirOpcion()
     }
 
     /**
@@ -295,38 +281,6 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
     }
 
     /**
-     * función que sirve para introducir un identificador de butaca válido o "stop"
-     * @return la butaca o el "stop" introducido por teclado
-     */
-    fun introducirButaca(): String{
-        var butaca = ""
-        do{
-            try{
-                butaca = readln().trim()
-                butacaValida(butaca)
-            }catch(e: Exception){
-                println(e.message)
-                butaca = ""
-            }
-        }while(butaca == "")
-        return butaca
-    }
-
-    /**
-     * función que sirve para validar la butaca o el "stop" introducido por teclado
-     * @param butaca lo que queremos validar
-     * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
-     * @return true en caso de que sea válido
-     */
-    fun butacaValida(butaca: String?): Boolean {
-        require(butaca != null){("El mensaje no puede ser nulo, vuelve a probar:")}
-        require(butaca.isNotEmpty()){"El mensaje no puede estar vacio, vuelve a probar:"}
-        val regex = Regex("[A-Z][0-9]+")
-        require(butaca == "stop" || butaca.matches(regex)){"EL menaje introducido no es válido, vuelve a probar:"}
-        return true
-    }
-
-    /**
      * función que sirve para comprobar si la butaca seleccionada está libre o no
      * @param butaca lo que queremos validar
      * @return true si está libre, false si está ocupada
@@ -347,36 +301,6 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
     }
 
     /**
-     * función que sirve para introducir una opción válida
-     * @return la opcion válida
-     */
-    fun introducirOpcion(): Int {
-        var opcion = 0
-        do {
-            try {
-                opcion = readln().toInt()
-                opcionValida(opcion)
-            } catch (e: Exception) {
-                println(e.message)
-                opcion = -1
-            }
-        } while (opcion == -1)
-        return opcion
-    }
-
-    /**
-     * función que sirve para validar la opción introducida por teclado
-     * @param opcion lo que queremos validar
-     * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
-     * @return true en caso de que sea válido
-     */
-    fun opcionValida(opcion: Int?): Boolean {
-        require(opcion != null){"La opción no puede ser nula, vuelve a probar:"}
-        require(opcion in 0..6){"No has elegido una de las opciones posibles, vuelve a probar:"}
-        return true
-    }
-
-    /**
      * función que sirve para representar las butacas de la sala de cine con su identificador
      */
     fun representacionInicialDeLaSala() {
@@ -390,64 +314,5 @@ data class salaDeCine(val nombre: String, val fila: Int, val columna: Int, val p
             println(mensaje)
             mensaje = ""
         }
-    }
-    /**
-     * función que sirve para introducir una fila o columna válida
-     * @return la fila o columna introducida por teclado
-     */
-    fun introducirFilaColumna(): Int{
-        var filaColumna = 0
-        do{
-            try{
-                filaColumna = readln().toInt()
-                filaColumnaValida(filaColumna)
-            }catch(e: Exception){
-                println(e.message)
-                filaColumna = -1
-            }
-        }while(filaColumna == -1)
-        return filaColumna
-    }
-
-    /**
-     * función que sirve para validar el año de publicación introducido por teclado
-     * @param filaColumna lo que queremos validar
-     * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
-     * @return true en caso de que sea válido
-     */
-    fun filaColumnaValida(filaColumna: Int?): Boolean {
-        require(filaColumna != null){("La fila/columna no puede ser nulo, vuelve a probar:")}
-        require(filaColumna > 0){"La fila/columna no puede ser menor que 1, vuelve a probar:"}
-        require(filaColumna < 26){"La fila/columna sobrepasar el tamaño 26, vuelve a probar:"}
-        return true
-    }
-    /**
-     * función que sirve para introducir un nombre válido
-     * @return el nombre introducido por teclado
-     */
-    fun introducirNombre(): String{
-        var nombre = ""
-        do{
-            try{
-                nombre = readln().trim()
-                nombreValido(nombre)
-            }catch(e: Exception){
-                println(e.message)
-                nombre = ""
-            }
-        }while(nombre == "")
-        return nombre
-    }
-
-    /**
-     * función que sirve para validar el nombre introducido por teclado
-     * @param nombre lo que queremos validar
-     * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
-     * @return true en caso de que sea válido
-     */
-    fun nombreValido(nombre: String?): Boolean {
-        require(nombre != null){("El nombre no puede ser nulo, vuelve a probar:")}
-        require(nombre.isNotEmpty()){"El nombre no puede estar vacio, vuelve a probar:"}
-        return true
     }
 }
