@@ -2,77 +2,63 @@ package ModelsSalaDeCine
 
 fun main(){
 
-    println("Primero introduce los datos de la sal del cine:")
-    println("Introduce el nombre que tiene su cine:")
-    val nombre = introducirNombre()
-    println("Introduce el número de filas que tiene su cine:")
-    val filas = introducirFilaColumna()
-    println("Introduce el número de columnas que tiene su cine:")
-    val columnas = introducirFilaColumna()
+    var salaCine: salaDeCine? = null
 
-    println("Ahora introduce los datos de la pelicula que se va a mostrar:")
-    println("Introduce el titulo de la pelicula:")
-    val titulo = introducirTitulo()
-    println("Introduce el año de publicación de la pelicula:")
-    val añoPublicacion =  introducirAñoPublicación()
-    println("Introduce el nombre del director de la pelicula:")
-    val director = introducirDirector()
-    println("Introduce el genero de la pelicula:")
-    val genero = introducirGenero()
+    when(elegirComoIntroducirDatosDeLaSalaDeCine()){
+        1 -> salaCine = introducirDatosAMano()
+        2 -> salaCine = salaDeCine.crearSalaDeCineCompletamenteAleatoria()
+    }
+    println()
 
-    var salaDeCine = salaDeCine(nombre, filas, columnas, pelicula.create(titulo, añoPublicacion, director, genero))
-
-    println("La sala del cine es la siguiente:")
-    salaDeCine.representacionInicialDeLaSala()
+    println("${Colores.CYAN.color}La sala del cine es la siguiente:")
+    salaCine!!.representacionDeLaSala()
 
     var opcion = 0
     do{
-        println("Seleccione la opción que desea:")
+        println("${Colores.CYAN.color}Seleccione la opción que desea:")
         opcion = menu()
+        println()
         when(opcion){
-            1 -> salaDeCine.comprarEntrada()
-            2 -> salaDeCine.reservarEntrada()
-            3 -> salaDeCine.formalizarReserva()
-            4 -> salaDeCine.anularReservaCompra()
-            5 -> salaDeCine.informeDeLaSalaDeCine()
-            6 -> salaDeCine.dineroTotalEnCaja()
+            1 -> salaCine!!.comprarEntrada()
+            2 -> salaCine!!.reservarEntrada()
+            3 -> salaCine!!.formalizarReserva()
+            4 -> salaCine!!.anularReservaCompra()
+            5 -> salaCine!!.informeDeLaSalaDeCine()
+            6 -> salaCine!!.dineroTotalEnCaja()
         }
-
     }while(opcion != 0)
-    println("Adios...")
+    println("${Colores.CYAN.color}Adios...")
 
 }
 
 /**
- * función que sirve para introducir un identificador de butaca válido o "stop"
- * @return la butaca o el "stop" introducido por teclado
+ * función que permite al usuario crear una sala de cine a partir de los datos que el mete
+ * @return la sala de cine creada a partir de los datos introducidos
  */
-fun introducirButaca(): String{
-    var butaca = ""
-    do{
-        try{
-            butaca = readln().trim().lowercase()
-            butacaValida(butaca)
-        }catch(e: Exception){
-            println(e.message)
-            butaca = ""
-        }
-    }while(butaca == "")
-    return butaca
-}
+fun introducirDatosAMano(): salaDeCine {
+    println("${Colores.CYAN.color}Primero introduce los datos del cine:")
+    println("${Colores.CYAN.color}Introduce el nombre que tiene su cine:")
+    val nombre = introducirNombre()
+    println("${Colores.CYAN.color}Introduce el número de filas que tiene su cine:")
+    val filas = introducirFilaColumna()
+    println("${Colores.CYAN.color}Introduce el número de columnas que tiene su cine:")
+    val columnas = introducirFilaColumna()
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    println("${Colores.CYAN.color}Introduce el número de butacas vip que tiene su cine::")
+    val butacasVip = readln().toInt()
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////7
 
-/**
- * función que sirve para validar la butaca o el "stop" introducido por teclado
- * @param butaca lo que queremos validar
- * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
- * @return true en caso de que sea válido
- */
-fun butacaValida(butaca: String?): Boolean {
-    require(butaca != null){("El mensaje no puede ser nulo, vuelve a probar:")}
-    require(butaca.isNotEmpty()){"El mensaje no puede estar vacio, vuelve a probar:"}
-    val regex = Regex("[A-Z][0-9]+")
-    require(butaca == "stop" || butaca.matches(regex)){"EL menaje introducido no es válido, vuelve a probar:"}
-    return true
+    println("${Colores.CYAN.color}Ahora introduce los datos de la pelicula que se va a mostrar:")
+    println("${Colores.CYAN.color}Introduce el titulo de la pelicula:")
+    val titulo = introducirTitulo()
+    println("${Colores.CYAN.color}Introduce el año de publicación de la pelicula:")
+    val añoPublicacion = introducirAñoPublicación()
+    println("${Colores.CYAN.color}Introduce el nombre del director de la pelicula:")
+    val director = introducirDirector()
+    println("${Colores.CYAN.color}Introduce el genero de la pelicula:")
+    val genero = introducirGenero()
+    println()
+    return salaDeCine.crearSalaDeCine(nombre, filas, columnas, butacasVip, pelicula.crearPelicula(titulo, añoPublicacion, director, genero))
 }
 
 /**
@@ -80,17 +66,17 @@ fun butacaValida(butaca: String?): Boolean {
  * @return la fila o columna introducida por teclado
  */
 fun introducirFilaColumna(): Int{
-    var filaColumna = 0
+    var filaColumna = ""
     do{
         try{
-            filaColumna = readln().toInt()
+            filaColumna = readln().trim()
             filaColumnaValida(filaColumna)
         }catch(e: Exception){
             println(e.message)
-            filaColumna = -1
+            filaColumna = ""
         }
-    }while(filaColumna == -1)
-    return filaColumna
+    }while(filaColumna == "")
+    return filaColumna.toInt()
 }
 
 /**
@@ -99,10 +85,13 @@ fun introducirFilaColumna(): Int{
  * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
  * @return true en caso de que sea válido
  */
-fun filaColumnaValida(filaColumna: Int?): Boolean {
-    require(filaColumna != null){("La fila/columna no puede ser nulo, vuelve a probar:")}
-    require(filaColumna > 0){"La fila/columna no puede ser menor que 1, vuelve a probar:"}
-    require(filaColumna < 26){"La fila/columna sobrepasar el tamaño 26, vuelve a probar:"}
+fun filaColumnaValida(filaColumna: String?): Boolean {
+    require(filaColumna != null){("${Colores.RED.color}La fila/columna no puede ser nulo, vuelve a probar:")}
+    val regex = Regex("-?[0-9]+")
+    require(filaColumna!!.matches(regex)){"${Colores.RED.color}La fila/columna introducida no es válida, vuelve a probar:"}
+    val filaOColumna = filaColumna.toInt()
+    require(filaOColumna > 0){"${Colores.RED.color}La fila/columna no puede ser menor que 1, vuelve a probar:"}
+    require(filaOColumna < 26){"${Colores.RED.color}La fila/columna no puede sobrepasar el tamaño 26, vuelve a probar:"}
     return true
 }
 /**
@@ -130,8 +119,8 @@ fun introducirNombre(): String{
  * @return true en caso de que sea válido
  */
 fun nombreValido(nombre: String?): Boolean {
-    require(nombre != null){("El nombre no puede ser nulo, vuelve a probar:")}
-    require(nombre.isNotEmpty()){"El nombre no puede estar vacio, vuelve a probar:"}
+    require(nombre != null){("${Colores.RED.color}El nombre no puede ser nulo, vuelve a probar:")}
+    require(nombre.isNotEmpty()){"${Colores.RED.color}El nombre no puede estar vacio, vuelve a probar:"}
     return true
 }
 
@@ -160,8 +149,8 @@ fun introducirTitulo(): String {
  * @return true en caso de que sea válido
  */
 fun tituloValido(titulo: String?): Boolean {
-    require(titulo != null) { "El título no puede ser nulo, vuelve a probar:" }
-    require(titulo.isNotEmpty()) { "El título de la peli no puede estar vacio, vuelve a probar:" }
+    require(titulo != null) { "${Colores.RED.color}El título no puede ser nulo, vuelve a probar:" }
+    require(titulo.isNotEmpty()) { "${Colores.RED.color}El título de la peli no puede estar vacio, vuelve a probar:" }
     return true
 }
 
@@ -170,17 +159,17 @@ fun tituloValido(titulo: String?): Boolean {
  * @return el año de publicacion introducido por teclado
  */
 fun introducirAñoPublicación(): Int {
-    var añoPublicacion = 0
+    var añoPublicacion = ""
     do {
         try {
-            añoPublicacion = readln().toInt()
+            añoPublicacion = readln().trim()
             añoPublicacionValido(añoPublicacion)
         } catch (e: Exception) {
             println(e.message)
-            añoPublicacion = -1
+            añoPublicacion = ""
         }
-    } while (añoPublicacion == -1)
-    return añoPublicacion
+    } while (añoPublicacion == "")
+    return añoPublicacion.toInt()
 }
 
 /**
@@ -189,10 +178,13 @@ fun introducirAñoPublicación(): Int {
  * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
  * @return true en caso de que sea válido
  */
-fun añoPublicacionValido(añoPublicacion: Int?): Boolean {
-    require(añoPublicacion != null) { "El año de publicación no puede ser nulo, vuelve a probar:" }
-    require(añoPublicacion > 0) { "El año de publicación no puede ser negativo, vuelve a probar:" }
-    require(añoPublicacion in 1950..2022) { "El año de publicación de la peli debe ser entre 1950 y 2022, vuelve a probar:" }
+fun añoPublicacionValido(añoPublicacion: String?): Boolean {
+    require(añoPublicacion != null) { "${Colores.RED.color}El año de publicación no puede ser nulo, vuelve a probar:" }
+    val regex = Regex("-?[0-9]+")
+    require(añoPublicacion!!.matches(regex)){"${Colores.RED.color}El año de publicación introducido no es válido, vuelve a probar:"}
+    val añoDePublicacion = añoPublicacion.toInt()
+    require(añoDePublicacion > 0) { "${Colores.RED.color}El año de publicación no puede ser negativo, vuelve a probar:" }
+    require(añoDePublicacion in 1950..2023) { "${Colores.RED.color}El año de publicación de la peli debe ser entre 1950 y 2023, vuelve a probar:" }
     return true
 }
 
@@ -221,8 +213,8 @@ fun introducirDirector(): String {
  * @return true en caso de que sea válido
  */
 fun directorValido(director: String?): Boolean {
-    require(director != null) { "El director no puede ser nulo, vuelve a probar:" }
-    require(director.isNotEmpty()) { "El director de la peli no puede estar vacio, vuelve a probar:" }
+    require(director != null) { "${Colores.RED.color}El director no puede ser nulo, vuelve a probar:" }
+    require(director.isNotEmpty()) { "${Colores.RED.color}El director de la peli no puede estar vacio, vuelve a probar:" }
     return true
 }
 
@@ -251,8 +243,8 @@ fun introducirGenero(): String {
  * @return true en caso de que sea válido
  */
 fun generoValido(genero: String?): Boolean {
-    require(genero != null) { "El género no puede ser nulo, vuelve a probar:" }
-    require(genero.isNotEmpty()) { "El género de la peli no puede estar vacio, vuelve a probar:" }
+    require(genero != null) { "${Colores.RED.color}El género no puede ser nulo, vuelve a probar:" }
+    require(genero.isNotEmpty()) { "${Colores.RED.color}El género de la peli no puede estar vacio, vuelve a probar:" }
     return true
 }
 
@@ -261,13 +253,17 @@ fun generoValido(genero: String?): Boolean {
  * @return la opcion seleccionada por el usuario
  */
 fun menu(): Int{
-    println("[1] Comprar entrada")
-    println("[2] Reservar entrada")
-    println("[3] Formalizar reserva de entrada")
-    println("[4] Anular reserva o compra de entrada")
-    println("[5] Conseguir informe de la sala")
-    println("[6] Conseguir recaudación total de la caja")
-    println("[0] Salir")
+    println("${Colores.GREEN.color}*************************************************")
+    println("*                    MENÚ                       *")
+    println("*************************************************")
+    println("* ${Colores.YELLOW.color}[1] ${Colores.CYAN.color}Comprar entrada${Colores.GREEN.color}                           *")
+    println("* ${Colores.YELLOW.color}[2] ${Colores.CYAN.color}Reservar entrada${Colores.GREEN.color}                          *")
+    println("* ${Colores.YELLOW.color}[3] ${Colores.CYAN.color}Formalizar reserva de entrada${Colores.GREEN.color}             *")
+    println("* ${Colores.YELLOW.color}[4] ${Colores.CYAN.color}Anular reserva o compra de entrada${Colores.GREEN.color}        *")
+    println("* ${Colores.YELLOW.color}[5] ${Colores.CYAN.color}Conseguir informe de la sala${Colores.GREEN.color}              *")
+    println("* ${Colores.YELLOW.color}[6] ${Colores.CYAN.color}Conseguir recaudación total de la caja${Colores.GREEN.color}    *")
+    println("* ${Colores.YELLOW.color}[0] ${Colores.CYAN.color}Salir${Colores.GREEN.color}                                     *")
+    println("*************************************************")
     return introducirOpcion()
 }
 
@@ -276,17 +272,17 @@ fun menu(): Int{
  * @return la opcion válida
  */
 fun introducirOpcion(): Int {
-    var opcion = 0
+    var opcion = ""
     do {
         try {
-            opcion = readln().toInt()
+            opcion = readln().trim()
             opcionValida(opcion)
         } catch (e: Exception) {
             println(e.message)
-            opcion = -1
+            opcion = ""
         }
-    } while (opcion == -1)
-    return opcion
+    } while (opcion == "")
+    return opcion.toInt()
 }
 
 /**
@@ -295,8 +291,87 @@ fun introducirOpcion(): Int {
  * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
  * @return true en caso de que sea válido
  */
-fun opcionValida(opcion: Int?): Boolean {
-    require(opcion != null){"La opción no puede ser nula, vuelve a probar:"}
-    require(opcion in 0..6){"No has elegido una de las opciones posibles, vuelve a probar:"}
+fun opcionValida(opcion: String?): Boolean {
+    require(opcion != null){"${Colores.RED.color}La opción no puede ser nula, vuelve a probar:"}
+    val regex = Regex("-?[0-9]+")
+    require(opcion!!.matches(regex)){"${Colores.RED.color}La opción introducida no es válida, vuelve a probar:"}
+    require(opcion.toInt() in 0..6){"${Colores.RED.color}No has elegido una de las opciones posibles, vuelve a probar:"}
+    return true
+}
+/**
+ * función que sirve para introducir un identificador de butaca válido o "stop"
+ * @return la butaca o el "stop" introducido por teclado
+ */
+fun introducirButaca(): String{
+    var butaca = ""
+    do{
+        try{
+            butaca = readln().trim()
+            butacaValida(butaca)
+        }catch(e: Exception){
+            println(e.message)
+            butaca = ""
+        }
+    }while(butaca == "")
+    return butaca
+}
+
+/**
+ * función que sirve para validar la butaca o el "stop" introducido por teclado
+ * @param butaca lo que queremos validar
+ * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
+ * @return true en caso de que sea válido
+ */
+fun butacaValida(butaca: String?): Boolean {
+    require(butaca != null){("${Colores.RED.color}El mensaje no puede ser nulo, vuelve a probar:")}
+    require(butaca.isNotEmpty()){"${Colores.RED.color}El mensaje no puede estar vacio, vuelve a probar:"}
+    val regex = Regex("[A-Z][0-9]+")
+    require(butaca == "stop" || butaca.matches(regex)){"${Colores.RED.color}EL mensaje introducido no es válido, vuelve a probar:"}
+    return true
+}
+
+/**
+ * función que sirve para presentar un menu al usuario y conseguir la opción que seleccione
+ * @return la opcion seleccionada por el usuario
+ */
+fun elegirComoIntroducirDatosDeLaSalaDeCine(): Int {
+    println("${Colores.GREEN.color}***************************************")
+    println("*                MENÚ                 *")
+    println("***************************************")
+    println("* ${Colores.YELLOW.color}[1] ${Colores.CYAN.color}Introducir datos a mano${Colores.GREEN.color}         *")
+    println("* ${Colores.YELLOW.color}[2] ${Colores.CYAN.color}Generar datos aleatoriamente${Colores.GREEN.color}    *")
+    println("***************************************")
+    return introducirOpcionDeIntroducirDatos()
+}
+
+/**
+ * función que sirve para introducir una opción válida
+ * @return la opcion válida
+ */
+fun introducirOpcionDeIntroducirDatos(): Int {
+    var opcion = ""
+    do {
+        try {
+            opcion = readln().trim()
+            opcionDeIntroducirDatosValida(opcion)
+        } catch (e: Exception) {
+            println(e.message)
+            opcion = ""
+        }
+    } while (opcion == "")
+    return opcion.toInt()
+}
+
+/**
+ * función que sirve para validar la opción introducida por teclado
+ * @param opcion lo que queremos validar
+ * @throws IllegalArgumentException un mensaje de error en caso de que sea inválido
+ * @return true en caso de que sea válido
+ */
+fun opcionDeIntroducirDatosValida(opcion: String?): Boolean {
+    require(opcion != null){"${Colores.RED.color}La opción no puede ser nula, vuelve a probar:"}
+    val regex = Regex("-?[0-9]+")
+    require(opcion!!.matches(regex)){"${Colores.RED.color}La opción introducida no es válida, vuelve a probar:"}
+    require(opcion.toInt() in 1..2){"${Colores.RED.color}No has elegido una de las opciones posibles, vuelve a probar:"}
     return true
 }

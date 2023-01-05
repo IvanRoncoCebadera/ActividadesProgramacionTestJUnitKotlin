@@ -1,30 +1,17 @@
 package ModelsSalaDeCine
 
-data class butaca(val identificador: String, var estado: String) {
+data class butaca(val identificador: String, var estado: String, var tipoButaca: TipoButaca) {
 
-    var esVip: Boolean = false
-
-    init{
-        var probabilidad = 0
+    companion object {
         /**
-         * función que sirve para decidir si una butaca es vip o no, al momento en el que se crea
+         * función que sirve para crear y devolver una butaca
+         * @param identificador es la combinación de fila y columna única de la butaca
+         * @param estado es el estado de la butaca, puede ser libre, reservado, o ocupado
+         * @param tipoButaca es el tipo de butaca, el precio de cada butaca varia dependiendo de si es normal o vip
+         * @return la butaca creada según los parametros introducidos
          */
-        fun seraVip(){
-            probabilidad = (1..100).random()
-            if(probabilidad in 1..40){
-                esVip = true
-            }
+        fun crearButaca(identificador: String, estado: String, tipoButaca: TipoButaca): butaca {
+            return butaca(identificador, estado, tipoButaca)
         }
-        seraVip()
-    }
-
-    /**
-     * función que sirve para crear y devolver una butaca
-     * @param identificador es la combinación de fila y columna única de la butaca
-     * @param estado es el estado de la butaca, puede ser libre, reservado, o ocupado
-     * @return la butaca creada según los parametros introducidos
-     */
-    fun create(identificador: String, estado: String): butaca{
-        return butaca(identificador, estado)
     }
 }
